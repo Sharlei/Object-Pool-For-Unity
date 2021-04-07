@@ -4,6 +4,9 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField] private DefaultPoolableBehaviour[] _prefabs;
+    [Tooltip("Order of prefabs instantiation (if there is more than 1) will be random. " +
+             "If it is not checked, prefabs will be instantiated one by one repeating.")][SerializeField] private bool instantiatePrefabsRandomly;
+    
     [Tooltip("Pool capacity min - is the count of objects, that will be instantiated on startup. " +
              "In the case if all pool objects are in using, new ones will be instantiated, but the total " +
              "number of objects won't be more than Pool capacity max.")]
@@ -59,6 +62,7 @@ public class ObjectPool : MonoBehaviour
     {
         if (_prefabs.Length == 0) return;
         if (_prefabsArrayPointer == _prefabs.Length) _prefabsArrayPointer = 0;
+        if (instantiatePrefabsRandomly) _prefabsArrayPointer = Random.Range(0, _prefabs.Length);
         
         var newInstance = Instantiate(_prefabs[_prefabsArrayPointer], transform).GetComponent<DefaultPoolableBehaviour>();
         _pool.Add(newInstance);
