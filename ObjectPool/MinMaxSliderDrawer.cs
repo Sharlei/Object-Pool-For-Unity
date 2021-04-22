@@ -2,7 +2,7 @@
 
 using UnityEngine;
 using UnityEditor;
-
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(MinMaxSliderAttribute))]
 class MinMaxSliderDrawer : PropertyDrawer
 {
@@ -126,3 +126,4 @@ class MinMaxSliderDrawer : PropertyDrawer
 		EditorGUI.showMixedValue = false;
 	}
 }
+#endif
